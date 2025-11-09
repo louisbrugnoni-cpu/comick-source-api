@@ -2,6 +2,8 @@
 
 A RESTful API built with Next.js 14 for scraping manga and comic metadata from multiple sources. Search across various manga websites, retrieve chapter lists, and monitor source health - all through a unified API interface.
 
+> **Looking for the userscript?** Check out the [Comick Source Linker on GreasyFork](https://greasyfork.org/en/scripts/555280-comick-source-linker)
+
 | Source    | ID          | Base URL                  | Status |
 | --------- | ----------- | ------------------------- | ------ |
 | MangaPark | `mangapark` | https://mangapark.io      | Active |
