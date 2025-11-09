@@ -3,6 +3,7 @@ import { MangaParkScraper } from "./mangapark";
 import { AtsuMoeScraper } from "./atsumoe";
 import { LikeMangaScraper } from "./likemanga";
 import { ManhuausScraper } from "./manhuaus";
+import { MangaReadScraper } from "./mangaread";
 import { MgekoScraper } from "./mgeko";
 import { NovelCoolScraper } from "./novelcool";
 import { AsuraScanScraper, asuraScanScraper } from "./asurascan";
@@ -13,6 +14,7 @@ const scrapers: BaseScraper[] = [
   new AtsuMoeScraper(),
   new LikeMangaScraper(),
   new ManhuausScraper(),
+  new MangaReadScraper(),
   new MgekoScraper(),
   new NovelCoolScraper(),
   asuraScanScraper,
@@ -49,6 +51,7 @@ export {
   AtsuMoeScraper,
   LikeMangaScraper,
   ManhuausScraper,
+  MangaReadScraper,
   MgekoScraper,
   NovelCoolScraper,
   AsuraScanScraper,

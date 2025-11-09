@@ -120,6 +120,7 @@ describe("Source Scrapers", () => {
       AtsuMoe: "https://atsu.moe/manga/oZOG5/",
       LikeManga: "https://likemanga.in/manga/solo-leveling/",
       Manhuaus: "https://manhuaus.com/manga/solo-leveling/",
+      MangaRead: "https://www.mangaread.org/manga/solo-leveling/",
       Mgeko: "https://www.mgeko.cc/manga/solo-leveling-mg1/",
       NovelCool:
         "https://www.novelcool.com/novel/Solo-Leveling-Ragnarok-Manga.html/",
