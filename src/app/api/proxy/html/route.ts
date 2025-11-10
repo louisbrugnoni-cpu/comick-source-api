@@ -16,16 +16,26 @@ export async function GET(request: NextRequest) {
 
     const decodedUrl = decodeURIComponent(targetUrl);
 
-    // Only allow AsuraScans URLs
+    // Only allow AsuraScans and WeebCentral URLs
     const isAsuraScanDomain =
       /https?:\/\/(www\.)?asuracomic\.net/.test(decodedUrl);
+    const isWeebCentralDomain =
+      /https?:\/\/(www\.)?weebcentral\.com/.test(decodedUrl);
 
-    if (!isAsuraScanDomain) {
+    if (!isAsuraScanDomain && !isWeebCentralDomain) {
       return NextResponse.json(
-        { error: "Invalid URL - only AsuraScans URLs are allowed" },
+        {
+          error:
+            "Invalid URL - only AsuraScans and WeebCentral URLs are allowed",
+        },
         { status: 400 },
       );
     }
+
+    // Set referer based on the domain
+    const referer = isWeebCentralDomain
+      ? "https://weebcentral.com/"
+      : "https://asuracomic.net/";
 
     const response = await fetch(decodedUrl, {
       headers: {
@@ -35,7 +45,7 @@ export async function GET(request: NextRequest) {
           "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
         "Accept-Language": "en-US,en;q=0.5",
         "Accept-Encoding": "gzip, deflate, br",
-        Referer: "https://asuracomic.net/",
+        Referer: referer,
         DNT: "1",
         Connection: "keep-alive",
         "Upgrade-Insecure-Requests": "1",
