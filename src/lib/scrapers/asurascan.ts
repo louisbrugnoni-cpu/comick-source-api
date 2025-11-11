@@ -189,7 +189,10 @@ export class AsuraScanScraper extends BaseScraper {
 
   protected override extractChapterNumber(chapterUrl: string, chapterText?: string): number {
     if (chapterText) {
-      const concatenatedMatch = chapterText.match(/Chapter\s+(\d+)\s*[\+\-]\s*(\d+)/i);
+      // Match concatenated chapters like "Chapter 5 + 6" or "Chapter 5 - 6"
+      // But NOT "Chapter 34 - 11.Grand Forge" where the number after dash is a section title
+      // The difference: concatenated chapters don't have a period after the second number
+      const concatenatedMatch = chapterText.match(/Chapter\s+(\d+)\s*[\+\-]\s*(\d+)(?!\.)(?:\s*$|\s+[^0-9])/i);
       if (concatenatedMatch) {
         return -1;
       }
