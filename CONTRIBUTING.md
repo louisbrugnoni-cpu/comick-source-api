@@ -62,6 +62,37 @@ export class YourSourceScraper extends BaseScraper {
 }
 ```
 
+### 2a. Client-Only Sources
+
+Some sources need special headers or server-side execution to bypass bot detection. If your source gets blocked with 403/503 errors or requires specific browser headers, mark it as client-only.
+
+**Examples:** AsuraScan, WeebCentral
+
+```typescript
+export class YourSourceScraper extends BaseScraper {
+  isClientOnly(): boolean {
+    return true;  // Marks this source as client-only
+  }
+
+  protected override async fetchWithRetry(url: string): Promise<string> {
+    const response = await fetch(url, {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "Referer": "https://yoursource.com/",
+        // Add other headers as needed
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    return await response.text();
+  }
+}
+```
+
+**HTML Proxy:** If custom headers aren't enough, there's an HTML proxy at `/api/proxy/html`. To use it, add your domain to the whitelist in `src/app/api/proxy/html/route.ts`. See AsuraScan or WeebCentral for examples.
+
 ### 3. Register Your Scraper
 
 Add it to `src/lib/scrapers/index.ts`:
