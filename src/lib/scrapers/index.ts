@@ -9,6 +9,7 @@ import { NovelCoolScraper } from "./novelcool";
 import { AsuraScanScraper, asuraScanScraper } from "./asurascan";
 import { WeebCentralScraper } from "./weebcentral";
 import { FlameComicsScraper, flameComicsScraper } from "./flamecomics";
+import { BatoScraper, batoScraper } from "./bato";
 import { SourceInfo } from "@/types";
 
 const scrapers: BaseScraper[] = [
@@ -22,6 +23,7 @@ const scrapers: BaseScraper[] = [
   asuraScanScraper,
   new WeebCentralScraper(),
   flameComicsScraper,
+  batoScraper,
 ];
 
 export function getScraper(url: string): BaseScraper | null {
@@ -68,4 +70,6 @@ export {
   WeebCentralScraper,
   FlameComicsScraper,
   flameComicsScraper,
+  BatoScraper,
+  batoScraper,
 };

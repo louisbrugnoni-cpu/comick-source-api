@@ -127,6 +127,7 @@ describe("Source Scrapers", () => {
       AsuraScan: "https://asuracomic.net/series/solo-leveling-042eaa6c",
       WeebCentral: "https://weebcentral.com/series/01J76XYCPSY3C4BNPBRY8JMCBE/Solo-Leveling",
       FlameComics: "https://flamecomics.xyz/series/1",
+      Bato: "https://bato.to/series/81514/solo-leveling-official",
     };
 
     scrapers.forEach((scraper) => {
