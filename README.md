@@ -10,7 +10,7 @@ A RESTful API built with Next.js 14 for scraping manga and comic metadata from m
 | AsuraScan | `asurascan` | https://asuracomic.net    | Active |
 | AtsuMoe   | `atsumoe`   | https://atsumoe.com       | Active |
 |WeebCentral|`weebcentral`| https://weebcentral.com   | Active | 
-| LikeManga | `likemanga` | https://likemanga.io      |Unstable|
+| LikeManga | `likemanga` | https://likemanga.io      | Active |
 | ManhuaUS  | `manhuaus`  | https://manhuaus.com      | Active |
 | MangaRead | `mangaread` | https://mangaread.org     | Active |
 | Mgeko     | `mgeko`     | https://mgeko.cc          | Active |
