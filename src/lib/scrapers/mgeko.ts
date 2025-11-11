@@ -50,9 +50,8 @@ export class MgekoScraper extends BaseScraper {
         const fullUrl = href.startsWith("http")
           ? href
           : `https://www.mgeko.cc${href}`;
-        const chapterNumber = this.extractChapterNumber(fullUrl);
-
         const chapterTitle = $link.find("strong.chapter-title").text().trim();
+        const chapterNumber = this.extractChapterNumber(fullUrl, chapterTitle);
 
         if (chapterNumber >= 0 && !seenChapterNumbers.has(chapterNumber)) {
           seenChapterNumbers.add(chapterNumber);
@@ -69,7 +68,19 @@ export class MgekoScraper extends BaseScraper {
     return chapters.sort((a, b) => a.number - b.number);
   }
 
-  protected extractChapterNumber(chapterUrl: string): number {
+  protected extractChapterNumber(chapterUrl: string, chapterText?: string): number {
+    if (chapterText) {
+      const concatenatedMatch = chapterText.match(/Chapter\s+(\d+)\s*[\+\-]\s*(\d+)/i);
+      if (concatenatedMatch) {
+        return -1;
+      }
+
+      const textMatch = chapterText.match(/Chapter\s+(\d+(?:\.\d+)?)/i);
+      if (textMatch) {
+        return parseFloat(textMatch[1]);
+      }
+    }
+
     const patterns = [
       /chapter[/-](\d+)(?:[-.\/](\d+))?/i,
       /-ch[/-](\d+)(?:[-.\/](\d+))?/i,
@@ -80,10 +91,11 @@ export class MgekoScraper extends BaseScraper {
       const match = chapterUrl.match(pattern);
       if (match) {
         const mainNumber = parseInt(match[1], 10);
-        const decimalPart = match[2] ? parseInt(match[2], 10) : 0;
+        const decimalPart = match[2] ? match[2] : null;
 
-        if (decimalPart > 0) {
-          return mainNumber + decimalPart / 10;
+        if (decimalPart) {
+          const divisor = Math.pow(10, decimalPart.length);
+          return mainNumber + parseInt(decimalPart, 10) / divisor;
         }
         return mainNumber;
       }

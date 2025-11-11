@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getScraperByName, getAllScrapers } from "@/lib/scrapers";
 
+export const runtime = "edge";
+
 export async function POST(request: NextRequest) {
   try {
     const { query, source } = await request.json();
@@ -17,13 +19,16 @@ export async function POST(request: NextRequest) {
       const scrapers = getAllScrapers();
       const searchPromises = scrapers.map(async (scraper) => {
         try {
+          console.log(`[Search] Starting search for ${scraper.getName()} with query: "${query.trim()}"`);
           const results = await scraper.search(query.trim());
+          console.log(`[Search] ${scraper.getName()} returned ${results.length} results`);
           return {
             source: scraper.getName(),
             results,
           };
         } catch (error) {
-          console.error(`Error searching ${scraper.getName()}:`, error);
+          console.error(`[Search] Error searching ${scraper.getName()}:`, error);
+          console.error(`[Search] Error details:`, error instanceof Error ? { message: error.message, stack: error.stack } : error);
           return {
             source: scraper.getName(),
             results: [],

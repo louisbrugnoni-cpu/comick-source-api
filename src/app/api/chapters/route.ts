@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getScraper, getScraperByName } from "@/lib/scrapers";
 
+export const runtime = "edge";
+
 export async function POST(request: NextRequest) {
   try {
     const { url, source } = await request.json();

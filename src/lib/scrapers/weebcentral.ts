@@ -5,42 +5,30 @@ import { ScrapedChapter, SearchResult } from "@/types";
 
 export class WeebCentralScraper extends BaseScraper {
   protected override async fetchWithRetry(url: string): Promise<string> {
-    // Try direct fetch first (faster, no proxy overhead)
-    try {
-      const directResponse = await fetch(url, {
-        method: "GET",
-        headers: {
-          Accept:
-            "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        },
-        mode: "cors",
-        credentials: "omit",
-      });
-
-      if (directResponse.ok) {
-        return await directResponse.text();
-      }
-    } catch {
-      // CORS failed or network error, fall back to proxy
-    }
-
-    // Fallback to proxy
-    const proxyUrl = `/api/proxy/html?url=${encodeURIComponent(url)}`;
-
-    const response = await fetch(proxyUrl, {
+    // Direct fetch with proper headers (works in edge runtime)
+    const response = await fetch(url, {
       method: "GET",
       headers: {
-        Accept: "text/html",
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Accept-Encoding": "gzip, deflate, br",
+        Referer: "https://weebcentral.com/",
+        DNT: "1",
+        Connection: "keep-alive",
+        "Upgrade-Insecure-Requests": "1",
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "same-origin",
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache",
       },
     });
 
     if (!response.ok) {
-      const error = await response
-        .json()
-        .catch(() => ({ error: "Unknown error" }));
-      throw new Error(
-        error.error || `HTTP ${response.status}: ${response.statusText}`,
-      );
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
 
     return await response.text();
@@ -56,6 +44,10 @@ export class WeebCentralScraper extends BaseScraper {
 
   canHandle(url: string): boolean {
     return url.includes("weebcentral.com");
+  }
+
+  isClientOnly(): boolean {
+    return true;
   }
 
   async extractMangaInfo(url: string): Promise<{ title: string; id: string }> {

@@ -4,6 +4,7 @@ export interface ScrapedChapter {
   title?: string;
   url: string;
   isDownloaded?: boolean;
+  lastUpdated?: string;
 }
 
 export interface SearchResult {
@@ -23,4 +24,5 @@ export interface SourceInfo {
   name: string;
   baseUrl: string;
   description?: string;
+  clientOnly?: boolean;
 }

@@ -78,4 +78,8 @@ export abstract class BaseScraper {
   getDescription(): string {
     return `${this.getName()} - ${this.getBaseUrl()}`;
   }
+
+  isClientOnly(): boolean {
+    return false;
+  }
 }

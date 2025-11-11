@@ -1,12 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { getClientOnlyScrapers } from "@/lib/scrapers";
+import { checkSourceHealth } from "@/lib/utils/source-health";
 
 interface Source {
   id: string;
   name: string;
   baseUrl: string;
   description?: string;
+  clientOnly?: boolean;
 }
 
 interface SourceHealth {
@@ -35,18 +38,65 @@ export default function Home() {
         setLoading(false);
       });
 
-    // Fetch health status
+    // Fetch server-side health status
     fetch("/api/health")
       .then((res) => res.json())
       .then((data) => {
-        setHealth(data.sources || {});
+        const serverHealth = data.sources || {};
+
+        const clientScrapers = getClientOnlyScrapers();
+        const clientOnlyNames = clientScrapers.map(s => s.getName().toLowerCase());
+
+        const filteredHealth: Record<string, SourceHealth> = {};
+        for (const [name, health] of Object.entries(serverHealth)) {
+          if (!clientOnlyNames.includes(name)) {
+            filteredHealth[name] = health as SourceHealth;
+          }
+        }
+
+        setHealth(filteredHealth);
         setHealthLoading(false);
+
+        // Run client-side health checks for client-only sources
+        runClientSideHealthChecks();
       })
       .catch((err) => {
         console.error("Failed to load health:", err);
         setHealthLoading(false);
       });
   }, []);
+
+  const runClientSideHealthChecks = async () => {
+    const clientScrapers = getClientOnlyScrapers();
+
+    for (const scraper of clientScrapers) {
+      const sourceName = scraper.getName().toLowerCase();
+
+      try {
+        const healthResult = await checkSourceHealth(scraper);
+
+        setHealth((prev) => ({
+          ...prev,
+          [sourceName]: {
+            status: healthResult.status as "healthy" | "cloudflare" | "timeout" | "error",
+            message: healthResult.message,
+            responseTime: healthResult.responseTime,
+            lastChecked: healthResult.lastChecked,
+          },
+        }));
+      } catch (error) {
+        console.error(`Client health check failed for ${sourceName}:`, error);
+        setHealth((prev) => ({
+          ...prev,
+          [sourceName]: {
+            status: "error",
+            message: error instanceof Error ? error.message : "Unknown error",
+            lastChecked: new Date().toISOString(),
+          },
+        }));
+      }
+    }
+  };
 
   const getStatusColor = (status?: string) => {
     switch (status) {

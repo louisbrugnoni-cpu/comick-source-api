@@ -88,10 +88,11 @@ export class MangaParkScraper extends BaseScraper {
       const match = chapterUrl.match(pattern);
       if (match) {
         const mainNumber = parseInt(match[1], 10);
-        const decimalPart = match[2] ? parseInt(match[2], 10) : 0;
+        const decimalPart = match[2] ? match[2] : null;
 
-        if (decimalPart > 0) {
-          return mainNumber + decimalPart / 10;
+        if (decimalPart) {
+          const divisor = Math.pow(10, decimalPart.length);
+          return mainNumber + parseInt(decimalPart, 10) / divisor;
         }
         return mainNumber;
       }

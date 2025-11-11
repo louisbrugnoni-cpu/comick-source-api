@@ -11,42 +11,30 @@ export class AsuraScanScraper extends BaseScraper {
   }
 
   protected override async fetchWithRetry(url: string): Promise<string> {
-    // Try direct fetch first (faster, no proxy overhead)
-    try {
-      const directResponse = await fetch(url, {
-        method: "GET",
-        headers: {
-          Accept:
-            "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        },
-        mode: "cors",
-        credentials: "omit",
-      });
-
-      if (directResponse.ok) {
-        return await directResponse.text();
-      }
-    } catch {
-      // CORS failed or network error, fall back to proxy
-    }
-
-    // Fallback to proxy
-    const proxyUrl = `/api/proxy/html?url=${encodeURIComponent(url)}`;
-
-    const response = await fetch(proxyUrl, {
+    // Direct fetch with proper headers (works in edge runtime)
+    const response = await fetch(url, {
       method: "GET",
       headers: {
-        Accept: "text/html",
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Accept-Encoding": "gzip, deflate, br",
+        Referer: "https://asuracomic.net/",
+        DNT: "1",
+        Connection: "keep-alive",
+        "Upgrade-Insecure-Requests": "1",
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "same-origin",
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache",
       },
     });
 
     if (!response.ok) {
-      const error = await response
-        .json()
-        .catch(() => ({ error: "Unknown error" }));
-      throw new Error(
-        error.error || `HTTP ${response.status}: ${response.statusText}`,
-      );
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
 
     return await response.text();
@@ -62,6 +50,10 @@ export class AsuraScanScraper extends BaseScraper {
 
   canHandle(url: string): boolean {
     return url.includes("asuracomic.net");
+  }
+
+  isClientOnly(): boolean {
+    return true;
   }
 
   async search(query: string): Promise<SearchResult[]> {
@@ -179,7 +171,7 @@ export class AsuraScanScraper extends BaseScraper {
         fullUrl = `${this.BASE_URL}/series/${href}`;
       }
 
-      const chapterNumber = this.extractChapterNumber(fullUrl);
+      const chapterNumber = this.extractChapterNumber(fullUrl, chapterText);
 
       if (chapterNumber >= 0 && !seenChapterNumbers.has(chapterNumber)) {
         seenChapterNumbers.add(chapterNumber);
@@ -195,7 +187,19 @@ export class AsuraScanScraper extends BaseScraper {
     return chapters.sort((a, b) => a.number - b.number);
   }
 
-  protected override extractChapterNumber(chapterUrl: string): number {
+  protected override extractChapterNumber(chapterUrl: string, chapterText?: string): number {
+    if (chapterText) {
+      const concatenatedMatch = chapterText.match(/Chapter\s+(\d+)\s*[\+\-]\s*(\d+)/i);
+      if (concatenatedMatch) {
+        return -1;
+      }
+
+      const textMatch = chapterText.match(/Chapter\s+(\d+(?:\.\d+)?)/i);
+      if (textMatch) {
+        return parseFloat(textMatch[1]);
+      }
+    }
+
     const patterns = [
       /\/chapter\/(\d+)(?:[.-](\d+))?/i,
       /chapter[/-](\d+)(?:[.-](\d+))?$/i,
@@ -205,10 +209,11 @@ export class AsuraScanScraper extends BaseScraper {
       const match = chapterUrl.match(pattern);
       if (match) {
         const mainNumber = parseInt(match[1], 10);
-        const decimalPart = match[2] ? parseInt(match[2], 10) : 0;
+        const decimalPart = match[2] ? match[2] : null;
 
-        if (decimalPart > 0) {
-          return mainNumber + decimalPart / 10;
+        if (decimalPart) {
+          const divisor = Math.pow(10, decimalPart.length);
+          return mainNumber + parseInt(decimalPart, 10) / divisor;
         }
         return mainNumber;
       }

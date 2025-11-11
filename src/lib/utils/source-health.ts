@@ -115,9 +115,9 @@ export async function checkSourceHealth(
     // Check if error message contains Cloudflare indicators
     const errorMessage = isErrorWithMessage(error) ? error.message : "";
     if (
-      errorMessage.includes("cloudflare") ||
-      errorMessage.includes("403") ||
-      errorMessage.includes("Challenge")
+      errorMessage.toLowerCase().includes("cloudflare") ||
+      errorMessage.includes("cf-ray") ||
+      errorMessage.toLowerCase().includes("challenge")
     ) {
       return {
         status: SourceStatus.CLOUDFLARE,

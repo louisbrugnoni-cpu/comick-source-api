@@ -38,12 +38,17 @@ export function getAllScrapers(): BaseScraper[] {
   return scrapers;
 }
 
+export function getClientOnlyScrapers(): BaseScraper[] {
+  return scrapers.filter((scraper) => scraper.isClientOnly());
+}
+
 export function getAllSourceInfo(): SourceInfo[] {
   return scrapers.map((scraper) => ({
     id: scraper.getName().toLowerCase().replace(/\s+/g, "-"),
     name: scraper.getName(),
     baseUrl: scraper.getBaseUrl(),
     description: scraper.getDescription(),
+    clientOnly: scraper.isClientOnly(),
   }));
 }
 
