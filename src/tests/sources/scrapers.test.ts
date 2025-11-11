@@ -126,6 +126,7 @@ describe("Source Scrapers", () => {
         "https://www.novelcool.com/novel/Solo-Leveling-Ragnarok-Manga.html/",
       AsuraScan: "https://asuracomic.net/series/solo-leveling-042eaa6c",
       WeebCentral: "https://weebcentral.com/series/01J76XYCPSY3C4BNPBRY8JMCBE/Solo-Leveling",
+      FlameComics: "https://flamecomics.xyz/series/1",
     };
 
     scrapers.forEach((scraper) => {

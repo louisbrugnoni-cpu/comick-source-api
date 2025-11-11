@@ -15,6 +15,7 @@ A RESTful API built with Next.js 14 for scraping manga and comic metadata from m
 | MangaRead | `mangaread` | https://mangaread.org     | Active |
 | Mgeko     | `mgeko`     | https://mgeko.cc          | Active |
 | NovelCool | `novelcool` | https://www.novelcool.com | Active |
+|FlameComics|`flamecomics`| https://flamecomics.xyz   | Active |
 
 ## Quick Start
 
