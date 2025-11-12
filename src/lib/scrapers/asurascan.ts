@@ -6,10 +6,6 @@ import { ScrapedChapter, SearchResult } from "@/types";
 export class AsuraScanScraper extends BaseScraper {
   private readonly BASE_URL = "https://asuracomic.net";
 
-  constructor() {
-    super();
-  }
-
   protected override async fetchWithRetry(url: string): Promise<string> {
     // Direct fetch with proper headers (works in edge runtime)
     const response = await fetch(url, {
@@ -225,5 +221,3 @@ export class AsuraScanScraper extends BaseScraper {
     return -1;
   }
 }
-
-export const asuraScanScraper = new AsuraScanScraper();

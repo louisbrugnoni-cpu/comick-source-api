@@ -196,7 +196,4 @@ export class FlameComicsScraper extends BaseScraper {
 
     return chapters.sort((a, b) => a.number - b.number);
   }
-
 }
-
-export const flameComicsScraper = new FlameComicsScraper();

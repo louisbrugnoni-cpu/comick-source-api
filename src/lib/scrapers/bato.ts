@@ -4,11 +4,7 @@ import { BaseScraper } from './base';
 import { ScrapedChapter, SearchResult } from '@/types';
 
 export class BatoScraper extends BaseScraper {
-  private readonly BASE_URL = 'https://bato.to';
-
-  constructor() {
-    super();
-  }
+  private readonly BASE_URL = "https://bato.to";
 
   getName(): string {
     return 'Bato';
@@ -207,5 +203,3 @@ export class BatoScraper extends BaseScraper {
     return match ? parseFloat(match[1]) : 0;
   }
 }
-
-export const batoScraper = new BatoScraper();
