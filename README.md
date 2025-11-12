@@ -18,6 +18,7 @@ A RESTful API built with Next.js 14 for scraping manga and comic metadata from m
 | FlameComics | `flamecomics` | https://flamecomics.xyz   | Active |
 | Bato        | `bato`        | https://bato.to           | Active |
 | Mangaloom   | 'mangaloom'   | https://mangaloom.com     | Active |
+| MangaYY     | `mangayy`     | https://mangayy.org       | Active |
 
 ## Quick Start
 
