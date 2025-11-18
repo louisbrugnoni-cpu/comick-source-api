@@ -22,6 +22,7 @@ A RESTful API built with Next.js 14 for scraping manga and comic metadata from m
 | TopManhua   | `topmanhua`   | https://manhuatop.org     | Active |
 | LagoonScans | `lagoonscans` | https://lagoonscans.com   | Active |
 | Stonescape  | `stonescape`  | https://stonescape.xyz    | Active |
+| Rizz Fables | `rizzfables`  | https://rizzfables.com    | Active |
 
 ## Quick Start
 
