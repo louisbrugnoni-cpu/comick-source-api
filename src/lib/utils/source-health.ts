@@ -7,6 +7,8 @@ export enum SourceStatus {
   ERROR = "error",
 }
 
+const HEALTH_CHECK_TIMEOUT_MS = 15000;
+
 export interface SourceHealthResult {
   status: SourceStatus;
   message: string;
@@ -62,13 +64,29 @@ export async function checkSourceHealth(
   const startTime = Date.now();
   const lastChecked = new Date().toISOString();
 
+  const timeoutPromise = new Promise<{ timedOut: true }>((resolve) => {
+    setTimeout(() => resolve({ timedOut: true }), HEALTH_CHECK_TIMEOUT_MS);
+  });
+
+  const searchPromise = scraper.search(testQuery).then((results) => ({
+    timedOut: false as const,
+    results,
+  }));
+
   try {
-    // Try a simple search
-    const results = await scraper.search(testQuery);
+    const result = await Promise.race([searchPromise, timeoutPromise]);
     const responseTime = Date.now() - startTime;
 
-    // If we got results, the source is healthy
-    if (Array.isArray(results)) {
+    if (result.timedOut) {
+      return {
+        status: SourceStatus.TIMEOUT,
+        message: `Source took longer than ${HEALTH_CHECK_TIMEOUT_MS / 1000}s to respond`,
+        responseTime,
+        lastChecked,
+      };
+    }
+
+    if (Array.isArray(result.results)) {
       return {
         status: SourceStatus.HEALTHY,
         message: "Source is operational",
