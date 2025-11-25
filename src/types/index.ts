@@ -1,3 +1,9 @@
+export interface ScanlationGroup {
+  id: string;
+  name: string;
+  url?: string;
+}
+
 export interface ScrapedChapter {
   id: string;
   number: number;
@@ -5,6 +11,7 @@ export interface ScrapedChapter {
   url: string;
   isDownloaded?: boolean;
   lastUpdated?: string;
+  group?: ScanlationGroup;
 }
 
 export interface SearchResult {
