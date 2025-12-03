@@ -16,8 +16,8 @@ A RESTful API built with Next.js 14 for scraping manga and comic metadata from m
 | Mgeko        | `mgeko`        | https://mgeko.cc          | Active |
 | NovelCool    | `novelcool`    | https://www.novelcool.com | Active |
 | FlameComics | `flamecomics` | https://flamecomics.xyz | Active |
-| Bato | `bato` | https://bato.to | Active |
-| Mangaloom | `mangaloom` | https://mangaloom.com | Unstable |
+| Bato | `bato` | https://bato.to | Unstable |
+| Mangaloom | `mangaloom` | https://mangaloom.com | Active |
 | MangaYY | `mangayy` | https://mangayy.org | Unstable |
 | TopManhua | `topmanhua` | https://manhuatop.org | Active |
 | LagoonScans  | `lagoonscans`  | https://lagoonscans.com   | Active |
