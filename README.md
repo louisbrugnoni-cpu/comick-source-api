@@ -6,19 +6,19 @@ A RESTful API built with Next.js 14 for scraping manga and comic metadata from m
 
 | Source       | ID             | Base URL                  | Status |
 | -----------  | -------------  | ------------------------- | ------ |
-| MangaPark | `mangapark` | https://mangapark.io | Active |
+| MangaPark | `mangapark` | https://mangapark.io | Unstable |
 | AsuraScan | `asurascan` | https://asuracomic.net | Active |
 | AtsuMoe      | `atsumoe`      | https://atsumoe.com       | Active |
 | WeebCentral | `weebcentral` | https://weebcentral.com | Unstable | 
-| LikeManga | `likemanga` | https://likemanga.io | Unstable |
+| LikeManga | `likemanga` | https://likemanga.io | Active |
 | ManhuaUS     | `manhuaus`     | https://manhuaus.com      | Active |
 | MangaRead    | `mangaread`    | https://mangaread.org     | Active |
 | Mgeko | `mgeko` | https://mgeko.cc | Unstable |
 | NovelCool    | `novelcool`    | https://www.novelcool.com | Active |
 | FlameComics | `flamecomics` | https://flamecomics.xyz | Active |
 | Bato | `bato` | https://bato.to | Active |
-| Mangaloom | `mangaloom` | https://mangaloom.com | Active |
-| MangaYY | `mangayy` | https://mangayy.org | Unstable |
+| Mangaloom | `mangaloom` | https://mangaloom.com | Unstable |
+| MangaYY | `mangayy` | https://mangayy.org | Active |
 | TopManhua | `topmanhua` | https://manhuatop.org | Active |
 | LagoonScans  | `lagoonscans`  | https://lagoonscans.com   | Active |
 | Stonescape   | `stonescape`   | https://stonescape.xyz    | Active |
