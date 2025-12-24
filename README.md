@@ -24,11 +24,11 @@ Next.js API for scraping manga metadata from multiple sources.
 | Stonescape   | `stonescape`   | https://stonescape.xyz    | Active |
 | Rizz Fables  | `rizz-fables`  | https://rizzfables.com    | Active |
 | Falcon Scans | `falcon-scans` | https://falconscans.com | Unstable |
-| Raven Scans | `raven-scans` | https://ravenscans.com | Unstable |
+| Raven Scans | `raven-scans` | https://ravenscans.com | Active |
 | Comix        | `comix`        | https://comix.to          | Active |
 | Mangataro    | `mangataro`    | https://mangataro.org     | Active |
 | KaliScan     | `kaliscan`     | https://kaliscan.com      | Active |
-| Mangago | `mangago` | https://www.mangago.zone | Unstable |
+| Mangago | `mangago` | https://www.mangago.zone | Active |
 | Project Suki | `project-suki` | https://projectsuki.com   | Active |
 
 ## Setup
