@@ -4,7 +4,7 @@ import { BaseScraper } from './base';
 import { ScrapedChapter, SearchResult, SourceType } from '@/types';
 
 export class RavenScansScraper extends BaseScraper {
-  private readonly baseUrl = 'https://ravenscans.com';
+  private readonly baseUrl = 'https://ravenscans.org';
 
   getName(): string {
     return 'Raven Scans';
@@ -19,7 +19,7 @@ export class RavenScansScraper extends BaseScraper {
   }
 
   canHandle(url: string): boolean {
-    return url.includes('ravenscans.com');
+    return url.includes('ravenscans.org');
   }
 
   async extractMangaInfo(url: string): Promise<{ title: string; id: string }> {
