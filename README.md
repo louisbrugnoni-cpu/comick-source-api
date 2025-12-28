@@ -30,6 +30,7 @@ Next.js API for scraping manga metadata from multiple sources.
 | KaliScan     | `kaliscan`     | https://kaliscan.com      | Active |
 | Mangago | `mangago` | https://www.mangago.zone | Active |
 | Project Suki | `project-suki` | https://projectsuki.com   | Active |
+| Weebdex | `weebdex` | https://weebdex.org | Active |
 
 ## Setup
 
