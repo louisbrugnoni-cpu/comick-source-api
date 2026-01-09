@@ -170,7 +170,10 @@ export default function Home() {
     fetch("/api/sources")
       .then((res) => res.json())
       .then((data) => {
-        setSources(data.sources || []);
+        const sortedSources = (data.sources || []).sort(
+          (a: Source, b: Source) => a.name.localeCompare(b.name)
+        );
+        setSources(sortedSources);
         setLoading(false);
       })
       .catch((err) => {
