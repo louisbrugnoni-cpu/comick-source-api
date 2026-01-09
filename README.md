@@ -31,6 +31,7 @@ Next.js API for scraping manga metadata from multiple sources.
 | Stonescape   | `stonescape`   | https://stonescape.xyz    | Active   |
 | Thunderscans | `thunderscans` | https://en-thunderscans.com | Active   |
 | TopManhua    | `topmanhua`    | https://manhuatop.org     | Active   |
+| UTOON        | `utoon`        | https://utoon.net         | Active   |
 | WeebCentral  | `weebcentral`  | https://weebcentral.com   | Unstable |
 | Weebdex      | `weebdex`      | https://weebdex.org       | Active   |
 
