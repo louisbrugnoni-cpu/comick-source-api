@@ -75,7 +75,9 @@ export class QiScansScraper extends BaseScraper {
       const response = await fetch(searchUrl, {
         headers: {
           "User-Agent": this.config.userAgent,
-          Accept: "application/json",
+          Accept: "application/json, text/plain, */*",
+          Origin: this.BASE_URL,
+          Referer: `${this.BASE_URL}/`,
         },
       });
 
@@ -122,12 +124,16 @@ export class QiScansScraper extends BaseScraper {
       throw new Error("Could not extract manga slug from URL");
     }
 
-    const searchUrl = `${this.API_URL}/api/query?page=1&perPage=1&searchTerm=${encodeURIComponent(slug)}&orderBy=createdAt`;
+    const titlePart = slug.replace(/^\d+-/, "").replace(/-/g, " ");
+
+    const searchUrl = `${this.API_URL}/api/query?page=1&perPage=10&searchTerm=${encodeURIComponent(titlePart)}&orderBy=createdAt`;
 
     const response = await fetch(searchUrl, {
       headers: {
         "User-Agent": this.config.userAgent,
-        Accept: "application/json",
+        Accept: "application/json, text/plain, */*",
+        Origin: this.BASE_URL,
+        Referer: `${this.BASE_URL}/`,
       },
     });
 
@@ -147,10 +153,14 @@ export class QiScansScraper extends BaseScraper {
       };
     }
 
-    return {
-      title: slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
-      id: slug,
-    };
+    if (posts.length > 0) {
+      return {
+        title: posts[0].postTitle,
+        id: posts[0].id.toString(),
+      };
+    }
+
+    throw new Error(`Could not find manga: ${slug}`);
   }
 
   async getChapterList(mangaUrl: string): Promise<ScrapedChapter[]> {
@@ -162,7 +172,13 @@ export class QiScansScraper extends BaseScraper {
       const response = await fetch(chaptersUrl, {
         headers: {
           "User-Agent": this.config.userAgent,
-          Accept: "application/json",
+          Accept: "application/json, text/plain, */*",
+          "Accept-Language": "en-US,en;q=0.9",
+          Origin: this.BASE_URL,
+          Referer: `${this.BASE_URL}/`,
+          "Sec-Fetch-Dest": "empty",
+          "Sec-Fetch-Mode": "cors",
+          "Sec-Fetch-Site": "same-site",
         },
       });
 
