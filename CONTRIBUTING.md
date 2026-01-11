@@ -151,6 +151,119 @@ npm run test:sources  # Must pass
 
 Add your source to the table in `README.md` under "Supported Sources".
 
+## Adding Frontpage Support
+
+Some sources have APIs or pages that provide curated content like trending manga, latest updates, or new releases. If a source supports this, you can add frontpage functionality.
+
+### 1. Check if the Source Has Frontpage Data
+
+Look for:
+- Trending/popular manga sections
+- Latest updates feeds
+- New releases pages
+- API endpoints that return curated lists
+
+### 2. Create a Frontpage Module
+
+Create a new file in `src/lib/frontpages/your-source.ts`:
+
+```typescript
+import { FrontpageManga, FrontpageSection } from "@/types";
+import { BaseFrontpage, FrontpageSectionConfig, FrontpageFetchOptions } from "./base";
+
+export class YourSourceFrontpage extends BaseFrontpage {
+  private readonly baseUrl = "https://yoursource.com";
+
+  getSourceId(): string {
+    return "yoursource";
+  }
+
+  getSourceName(): string {
+    return "YourSource";
+  }
+
+  getAvailableSections(): FrontpageSectionConfig[] {
+    return [
+      {
+        id: "trending",
+        title: "Trending",
+        type: "trending",
+        supportsPagination: true,
+        supportsTimeFilter: false,
+      },
+      // Add more sections as needed
+    ];
+  }
+
+  async fetchSection(
+    sectionId: string,
+    options: FrontpageFetchOptions = {}
+  ): Promise<FrontpageSection> {
+    const { page = 1, limit = 30 } = options;
+
+    // Fetch and parse the data
+    const items: FrontpageManga[] = [];
+
+    // Your implementation here
+
+    return {
+      id: sectionId,
+      title: "Trending",
+      type: "trending",
+      items,
+      supportsPagination: true,
+      supportsTimeFilter: false,
+    };
+  }
+}
+```
+
+### 3. Register Your Frontpage Module
+
+Add it to `src/lib/frontpages/index.ts`:
+
+```typescript
+import { YourSourceFrontpage } from "./your-source";
+
+const frontpages: BaseFrontpage[] = [
+  // ... existing frontpages
+  new YourSourceFrontpage(),
+];
+```
+
+### 4. Update Documentation
+
+Document the frontpage support in the README under the `/api/frontpage` section.
+
+### Available Section Types
+
+- `trending` - Popular/trending manga
+- `most_followed` - Most followed/bookmarked
+- `latest_hot` - Latest updates (hot/popular)
+- `latest_new` - Latest updates (new releases)
+- `recently_added` - Recently added to the site
+- `completed` - Completed series
+
+### Frontpage Data Structure
+
+Each `FrontpageManga` item should include:
+
+```typescript
+{
+  id: string;           // Unique identifier
+  title: string;        // Manga title
+  url: string;          // Full URL to manga page
+  coverImage?: string;  // Cover image URL
+  latestChapter?: number;
+  lastUpdated?: string;
+  rating?: number;
+  followers?: string;
+  type?: string;        // manga, manhwa, manhua
+  status?: string;      // releasing, finished, etc.
+  synopsis?: string;
+}
+```
+
 ## Code Quality Requirements
 
 - **TypeScript**: No `any` types unless absolutely necessary

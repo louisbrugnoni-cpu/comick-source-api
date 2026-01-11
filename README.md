@@ -104,6 +104,53 @@ Check source status. Cached for 5 minutes. Returns `cached` and `cacheAge` field
 
 Force refresh health check cache.
 
+### GET /api/frontpage
+
+List sources with frontpage support and their available sections.
+
+```json
+{
+  "sources": [
+    {
+      "sourceId": "comix",
+      "sourceName": "Comix",
+      "availableSections": [
+        {
+          "id": "trending",
+          "title": "Most Recent Popular",
+          "type": "trending",
+          "supportsTimeFilter": true,
+          "availableTimeFilters": [1, 7, 30, 90, 180, 365]
+        }
+      ]
+    }
+  ],
+  "sourceIds": ["comix"]
+}
+```
+
+### POST /api/frontpage
+
+Fetch frontpage section data from a source.
+
+```json
+{
+  "source": "comix",
+  "section": "trending",
+  "page": 1,
+  "limit": 30,
+  "days": 7
+}
+```
+
+**Available sections for Comix:**
+- `trending` - Most Recent Popular (supports time filter)
+- `most_followed` - Most Followed New Comics (supports time filter)
+- `latest_hot` - Latest Updates (Hot)
+- `latest_new` - Latest Updates (New)
+- `recently_added` - Recently Added
+- `completed` - Complete Series
+
 ### GET /api/proxy/html
 
 Proxy requests to AsuraScans and WeebCentral (CORS workaround).
