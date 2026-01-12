@@ -25,6 +25,7 @@ Next.js API for scraping manga metadata from multiple sources.
 | MangaRead      | `mangaread`     | https://mangaread.org       | Active   |
 | Mangataro      | `mangataro`     | https://mangataro.org       | Active   |
 | MangaYY        | `mangayy`       | https://mangayy.org         | Active   |
+| Manhuaplus     | `manhuaplus`    | https://manhuaplus.top      | Active   |
 | ManhuaUS       | `manhuaus`      | https://manhuaus.com        | Unstable |
 | Mgeko          | `mgeko`         | https://mgeko.cc            | Active   |
 | NovelCool      | `novelcool`     | https://www.novelcool.com   | Active   |
