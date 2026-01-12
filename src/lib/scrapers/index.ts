@@ -31,6 +31,7 @@ import { UtoonScraper } from "./utoon";
 import { VortexScansScraper } from "./vortexscans";
 import { ArvenComicsScraper } from "./arvencomics";
 import { LuaComicScraper } from "./luacomic";
+import { VioletscansScraper } from "./violetscans";
 import { SourceInfo } from "@/types";
 
 const scrapers: BaseScraper[] = [
@@ -66,6 +67,7 @@ const scrapers: BaseScraper[] = [
   new VortexScansScraper(),
   new ArvenComicsScraper(),
   new LuaComicScraper(),
+  new VioletscansScraper(),
 ];
 
 export function getScraper(url: string): BaseScraper | null {
@@ -133,4 +135,5 @@ export {
   VortexScansScraper,
   ArvenComicsScraper,
   LuaComicScraper,
+  VioletscansScraper,
 };
