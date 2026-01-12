@@ -36,6 +36,7 @@ Next.js API for scraping manga metadata from multiple sources.
 | Qi Scans       | `qi-scans`      | https://qiscans.org         | Active   |
 | Raven Scans    | `raven-scans`   | https://ravenscans.org      | Unstable |
 | Rizz Fables    | `rizz-fables`   | https://rizzfables.com      | Active   |
+| Spider Scans   | `spider-scans`  | https://spiderscans.xyz     | Active   |
 | Stonescape     | `stonescape`    | https://stonescape.xyz      | Active   |
 | Temple Scan    | `temple-scan`   | https://templetoons.com     | Active   |
 | Thunderscans   | `thunderscans`  | https://en-thunderscans.com | Active   |
