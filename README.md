@@ -6,6 +6,7 @@ Next.js API for scraping manga metadata from multiple sources.
 
 | Source       | ID             | Base URL                    | Status   |
 | ------------ | -------------- | --------------------------- | -------- |
+| Arven Comics | `arven-comics` | https://arvencomics.com     | Active   |
 | AsuraScan    | `asurascan`    | https://asuracomic.net      | Active   |
 | AtsuMoe      | `atsumoe`      | https://atsumoe.com         | Active   |
 | Bato         | `bato`         | https://bato.to             | Unstable |
