@@ -22,6 +22,7 @@ Next.js API for scraping manga metadata from multiple sources.
 | KappaBeast         | `kappabeast`         | https://kappabeast.com      | Active   |
 | KDT Scans          | `kdt-scans`          | https://www.silentquill.net | Active   |
 | LagoonScans        | `lagoonscans`        | https://lagoonscans.com     | Active   |
+| LHTranslation      | `lhtranslation`      | https://lhtranslation.net   | Active   |
 | LikeManga          | `likemanga`          | https://likemanga.io        | Active   |
 | Lua Comic          | `lua-comic`          | https://luacomic.org        | Active   |
 | Madarascans        | `madarascans`        | https://madarascans.com     | Active   |
