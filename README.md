@@ -40,7 +40,7 @@ Next.js API for scraping manga metadata from multiple sources.
 | Manhuaplus         | `manhuaplus`         | https://manhuaplus.top      | Active   |
 | ManhuaUS           | `manhuaus`           | https://manhuaus.com        | Unstable |
 | Mgeko              | `mgeko`              | https://mgeko.cc            | Active   |
-| NovelCool          | `novelcool`          | https://www.novelcool.com   | Active   |
+| NovelCool          | `novelcool`          | https://www.novelcool.com   | Unstable |
 | Philia Scans       | `philia-scans`       | https://philiascans.org     | Active   |
 | Project Suki       | `project-suki`       | https://projectsuki.com     | Active   |
 | Qi Scans           | `qi-scans`           | https://qiscans.org         | Active   |
@@ -60,7 +60,7 @@ Next.js API for scraping manga metadata from multiple sources.
 | Weebdex            | `weebdex`            | https://weebdex.org         | Active   |
 | WitchScans         | `witchscans`         | https://witchscans.com      | Active   |
 | Writers' Scans     | `writers-scans`      | https://writerscans.com     | Active   |
-| Yaksha Scans       | `yaksha-scans`       | https://yakshascans.com     | Active   |
+| Yaksha Scans       | `yaksha-scans`       | https://yakshascans.com     | Unstable |
 
 ## Setup
 
