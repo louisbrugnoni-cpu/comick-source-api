@@ -32,6 +32,7 @@ Next.js API for scraping manga metadata from multiple sources.
 | MangaCloud         | `mangacloud`         | https://mangacloud.org      | Active   |
 | Mangago            | `mangago`            | https://www.mangago.zone    | Active   |
 | MangaKatana        | `mangakatana`        | https://mangakatana.com     | Active   |
+| Mangasushi         | `mangasushi`         | https://mangasushi.org      | Active   |
 | Mangaloom          | `mangaloom`          | https://mangaloom.com       | Active   |
 | MangaPark          | `mangapark`          | https://mangapark.io        | Unstable |
 | MangaRead          | `mangaread`          | https://mangaread.org       | Active   |
