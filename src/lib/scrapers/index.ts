@@ -20,6 +20,7 @@ import { FalconscansScraper } from "./falconscans";
 import { ComixScraper } from "./comix";
 import { DemonicscansScraper } from "./demonicscans";
 import { RavenScansScraper } from "./ravenscans";
+import { RdscansScraper } from "./rdscans";
 import { RitharscansScraper } from "./ritharscans";
 import { RokariComicsScraper } from "./rokaricomics";
 import { MangataroScraper } from "./mangataro";
@@ -81,6 +82,7 @@ const scrapers: BaseScraper[] = [
   new ComixScraper(),
   new DemonicscansScraper(),
   new RavenScansScraper(),
+  new RdscansScraper(),
   new RitharscansScraper(),
   new RokariComicsScraper(),
   new MangataroScraper(),
@@ -174,6 +176,7 @@ export {
   ComixScraper,
   DemonicscansScraper,
   RavenScansScraper,
+  RdscansScraper,
   RitharscansScraper,
   RokariComicsScraper,
   MangataroScraper,
