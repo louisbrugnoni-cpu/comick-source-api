@@ -20,6 +20,7 @@ import { FalconscansScraper } from "./falconscans";
 import { ComixScraper } from "./comix";
 import { DemonicscansScraper } from "./demonicscans";
 import { DivaScansScraper } from "./divascans";
+import { EvaScansScraper } from "./evascans";
 import { RavenScansScraper } from "./ravenscans";
 import { RdscansScraper } from "./rdscans";
 import { RitharscansScraper } from "./ritharscans";
@@ -128,6 +129,7 @@ const scrapers: BaseScraper[] = [
   new MistScansScraper(),
   new RageScansScraper(),
   new DivaScansScraper(),
+  new EvaScansScraper(),
 ];
 
 export function getScraper(url: string): BaseScraper | null {
@@ -226,4 +228,5 @@ export {
   MistScansScraper,
   RageScansScraper,
   DivaScansScraper,
+  EvaScansScraper,
 };
