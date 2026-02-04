@@ -59,6 +59,7 @@ import { LHTranslationScraper } from "./lhtranslation";
 import { KenscansScraper } from "./kenscans";
 import { MangaKatanaScraper } from "./mangakatana";
 import { MangaCloudScraper } from "./mangacloud";
+import { MistScansScraper } from "./mistscans";
 import { SourceInfo } from "@/types";
 
 const scrapers: BaseScraper[] = [
@@ -122,6 +123,7 @@ const scrapers: BaseScraper[] = [
   new KenscansScraper(),
   new MangaKatanaScraper(),
   new MangaCloudScraper(),
+  new MistScansScraper(),
 ];
 
 export function getScraper(url: string): BaseScraper | null {
@@ -217,4 +219,5 @@ export {
   KenscansScraper,
   MangaKatanaScraper,
   MangaCloudScraper,
+  MistScansScraper,
 };
