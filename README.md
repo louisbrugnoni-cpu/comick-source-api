@@ -29,7 +29,7 @@ Next.js API for scraping manga metadata from multiple sources.
 | KS Group           | `ks-group-scans`     | https://ksgroupscans.com    | Active   |
 | KuraManga          | `kuramanga`          | https://kuramanga.com       | Active   |
 | LagoonScans        | `lagoonscans`        | https://lagoonscans.com     | Active   |
-| LHTranslation      | `lhtranslation`      | https://lhtranslation.net   | Active   |
+| LHTranslation      | `lhtranslation`      | https://lhtranslation.net   | Unstable |
 | LikeManga          | `likemanga`          | https://likemanga.io        | Unstable |
 | Lua Comic          | `lua-comic`          | https://luacomic.org        | Active   |
 | Madarascans        | `madarascans`        | https://madarascans.com     | Active   |
@@ -63,7 +63,7 @@ Next.js API for scraping manga metadata from multiple sources.
 | Thunderscans       | `thunderscans`       | https://en-thunderscans.com | Active   |
 | TopManhua          | `topmanhua`          | https://manhuatop.org       | Active   |
 | UTOON              | `utoon`              | https://utoon.net           | Active   |
-| Violetscans        | `violetscans`        | https://violetscans.org     | Unstable |
+| Violetscans        | `violetscans`        | https://violetscans.org     | Active   |
 | Vortex Scans       | `vortex-scans`       | https://vortexscans.org     | Active   |
 | WeebCentral        | `weebcentral`        | https://weebcentral.com     | Unstable |
 | Weebdex            | `weebdex`            | https://weebdex.org         | Active   |
