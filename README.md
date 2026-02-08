@@ -24,12 +24,12 @@ Next.js API for scraping manga metadata from multiple sources.
 | Galaxy Degen Scans | `galaxy-degen-scans` | https://gdscans.com         | Active   |
 | KaliScan           | `kaliscan`           | https://kaliscan.com        | Active   |
 | KappaBeast         | `kappabeast`         | https://kappabeast.com      | Unstable |
-| KDT Scans          | `kdt-scans`          | https://www.silentquill.net | Active   |
+| KDT Scans          | `kdt-scans`          | https://www.silentquill.net | Unstable |
 | Kenscans           | `kenscans`           | https://kencomics.com       | Active   |
 | KS Group           | `ks-group-scans`     | https://ksgroupscans.com    | Active   |
 | KuraManga          | `kuramanga`          | https://kuramanga.com       | Active   |
 | LagoonScans        | `lagoonscans`        | https://lagoonscans.com     | Active   |
-| LHTranslation      | `lhtranslation`      | https://lhtranslation.net   | Unstable |
+| LHTranslation      | `lhtranslation`      | https://lhtranslation.net   | Active   |
 | LikeManga          | `likemanga`          | https://likemanga.io        | Unstable |
 | Lua Comic          | `lua-comic`          | https://luacomic.org        | Active   |
 | Madarascans        | `madarascans`        | https://madarascans.com     | Active   |
