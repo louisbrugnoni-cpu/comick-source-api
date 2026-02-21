@@ -21,7 +21,7 @@ Next.js API for scraping manga metadata from multiple sources.
 | Falcon Scans       | `falcon-scans`       | https://falconscans.com     | Shutdown |
 | Firescans          | `firescans`          | https://firescans.xyz       | Active   |
 | FlameComics        | `flamecomics`        | https://flamecomics.xyz     | Active   |
-| Galaxy Degen Scans | `galaxy-degen-scans` | https://gdscans.com         | Unstable |
+| Galaxy Degen Scans | `galaxy-degen-scans` | https://gdscans.com         | Active   |
 | Greed Scans        | `greed-scans`        | https://greedscans.com      | Active   |
 | Hades Scans        | `hades-scans`        | https://hadesscans.com      | Active   |
 | KaliScan           | `kaliscan`           | https://kaliscan.com        | Active   |
@@ -50,7 +50,7 @@ Next.js API for scraping manga metadata from multiple sources.
 | Mgeko              | `mgeko`              | https://mgeko.cc            | Active   |
 | Mist Scans         | `mist-scans`         | https://mistscans.com       | Active   |
 | NovelCool          | `novelcool`          | https://www.novelcool.com   | Active   |
-| Philia Scans       | `philia-scans`       | https://philiascans.org     | Active   |
+| Philia Scans       | `philia-scans`       | https://philiascans.org     | Unstable |
 | Project Suki       | `project-suki`       | https://projectsuki.com     | Active   |
 | Qi Scans           | `qi-scans`           | https://qiscans.org         | Active   |
 | Rage Scans         | `rage-scans`         | https://ragescans.com       | Active   |
@@ -68,7 +68,7 @@ Next.js API for scraping manga metadata from multiple sources.
 | Violetscans        | `violetscans`        | https://violetscans.org     | Active   |
 | Vortex Scans       | `vortex-scans`       | https://vortexscans.org     | Active   |
 | WEBTOON            | `webtoon`            | https://www.webtoons.com    | Active   |
-| WeebCentral        | `weebcentral`        | https://weebcentral.com     | Unstable |
+| WeebCentral        | `weebcentral`        | https://weebcentral.com     | Active   |
 | Weebdex            | `weebdex`            | https://weebdex.org         | Active   |
 | WitchScans         | `witchscans`         | https://witchscans.com      | Active   |
 | Writers' Scans     | `writers-scans`      | https://writerscans.com     | Active   |
