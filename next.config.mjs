@@ -1,10 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  serverExternalPackages: [
-    "puppeteer-core",
-    "puppeteer-extra",
-    "puppeteer-extra-plugin-stealth",
-  ],
+  experimental: {
+    serverComponentsExternalPackages: ["puppeteer-core"],
+  },
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.externals = config.externals || [];
+      config.externals.push("puppeteer-core");
+    }
+    return config;
+  },
 };
 
 export default nextConfig;

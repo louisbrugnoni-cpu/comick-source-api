@@ -4,10 +4,8 @@ let browserInstance: any = null;
 
 async function getBrowser() {
   if (!browserInstance || !browserInstance.isConnected()) {
-    const puppeteerExtra = (await import("puppeteer-extra")).default;
-    const StealthPlugin = (await import("puppeteer-extra-plugin-stealth")).default;
-    puppeteerExtra.use(StealthPlugin());
-    browserInstance = await puppeteerExtra.launch({
+    const puppeteer = require("puppeteer-core");
+    browserInstance = await puppeteer.launch({
       headless: true,
       executablePath: "/usr/bin/chromium-browser",
       args: [
@@ -111,7 +109,11 @@ export abstract class BaseScraper {
     const page = await browser.newPage();
     try {
       await page.setUserAgent(this.config.userAgent);
+      await page.setExtraHTTPHeaders({
+        "Accept-Language": "en-US,en;q=0.9",
+      });
       await page.goto(url, { waitUntil: "networkidle2", timeout: 30000 });
+      await this.delay(2000);
       const html = await page.content();
       return html;
     } finally {
