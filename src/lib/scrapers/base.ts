@@ -1,4 +1,29 @@
 import { ScrapedChapter, SearchResult, SourceType } from "@/types";
+import puppeteerExtra from "puppeteer-extra";
+import StealthPlugin from "puppeteer-extra-plugin-stealth";
+
+puppeteerExtra.use(StealthPlugin());
+
+let browserInstance: ReturnType<typeof puppeteerExtra.launch> extends Promise<infer T> ? T : never;
+
+async function getBrowser() {
+  if (!browserInstance || !(browserInstance as any).isConnected()) {
+    browserInstance = await puppeteerExtra.launch({
+      headless: true,
+      executablePath: "/usr/bin/chromium-browser",
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-gpu",
+        "--no-first-run",
+        "--no-zygote",
+        "--single-process",
+      ],
+    }) as any;
+  }
+  return browserInstance;
+}
 
 interface ScraperConfig {
   retryAttempts: number;
@@ -14,7 +39,7 @@ export abstract class BaseScraper {
       retryAttempts: 3,
       downloadDelay: 1000,
       userAgent:
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
       ...config,
     };
   }
@@ -51,15 +76,48 @@ export abstract class BaseScraper {
           throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
 
-        return await response.text();
+        const html = await response.text();
+
+        if (
+          html.includes("challenge-platform") ||
+          html.includes("Just a moment") ||
+          html.includes("cf-browser-verification")
+        ) {
+          console.log(
+            `[Puppeteer] Cloudflare detected on ${url}, using browser...`,
+          );
+          return await this.fetchWithBrowser(url);
+        }
+
+        return html;
       } catch (error) {
         if (i === retries) {
-          throw error;
+          try {
+            console.log(
+              `[Puppeteer] Fetch failed for ${url}, trying browser...`,
+            );
+            return await this.fetchWithBrowser(url);
+          } catch {
+            throw error;
+          }
         }
         await this.delay(this.config.downloadDelay * (i + 1));
       }
     }
     throw new Error("Failed to fetch after retries");
+  }
+
+  protected async fetchWithBrowser(url: string): Promise<string> {
+    const browser = await getBrowser();
+    const page = await (browser as any).newPage();
+    try {
+      await page.setUserAgent(this.config.userAgent);
+      await page.goto(url, { waitUntil: "networkidle2", timeout: 30000 });
+      const html = await page.content();
+      return html;
+    } finally {
+      await page.close();
+    }
   }
 
   protected async delay(ms: number): Promise<void> {
