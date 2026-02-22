@@ -5,6 +5,7 @@ import {
   FrontpageSectionConfig,
   FrontpageFetchOptions,
 } from "./base";
+import { fetchJsonWithBypass } from "../flaresolverr";
 
 export class ComixFrontpage extends BaseFrontpage {
   private readonly baseUrl = "https://comix.to";
@@ -156,18 +157,7 @@ export class ComixFrontpage extends BaseFrontpage {
 
   private async fetchTopItems(url: string): Promise<FrontpageManga[]> {
     try {
-      const response = await fetch(url, {
-        headers: {
-          "User-Agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-
-      const data = await response.json();
+      const data = await fetchJsonWithBypass(url);
 
       if (!data.result?.items || !Array.isArray(data.result.items)) {
         return [];
@@ -182,18 +172,7 @@ export class ComixFrontpage extends BaseFrontpage {
 
   private async fetchMangaList(url: string): Promise<FrontpageManga[]> {
     try {
-      const response = await fetch(url, {
-        headers: {
-          "User-Agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-
-      const data = await response.json();
+      const data = await fetchJsonWithBypass(url);
 
       if (!data.result?.items || !Array.isArray(data.result.items)) {
         return [];
