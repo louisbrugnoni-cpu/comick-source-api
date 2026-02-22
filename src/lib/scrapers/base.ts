@@ -1,13 +1,12 @@
 import { ScrapedChapter, SearchResult, SourceType } from "@/types";
-import puppeteerExtra from "puppeteer-extra";
-import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
-puppeteerExtra.use(StealthPlugin());
-
-let browserInstance: ReturnType<typeof puppeteerExtra.launch> extends Promise<infer T> ? T : never;
+let browserInstance: any = null;
 
 async function getBrowser() {
-  if (!browserInstance || !(browserInstance as any).isConnected()) {
+  if (!browserInstance || !browserInstance.isConnected()) {
+    const puppeteerExtra = (await import("puppeteer-extra")).default;
+    const StealthPlugin = (await import("puppeteer-extra-plugin-stealth")).default;
+    puppeteerExtra.use(StealthPlugin());
     browserInstance = await puppeteerExtra.launch({
       headless: true,
       executablePath: "/usr/bin/chromium-browser",
@@ -20,7 +19,7 @@ async function getBrowser() {
         "--no-zygote",
         "--single-process",
       ],
-    }) as any;
+    });
   }
   return browserInstance;
 }
@@ -109,7 +108,7 @@ export abstract class BaseScraper {
 
   protected async fetchWithBrowser(url: string): Promise<string> {
     const browser = await getBrowser();
-    const page = await (browser as any).newPage();
+    const page = await browser.newPage();
     try {
       await page.setUserAgent(this.config.userAgent);
       await page.goto(url, { waitUntil: "networkidle2", timeout: 30000 });
