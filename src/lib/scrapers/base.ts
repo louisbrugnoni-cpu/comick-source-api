@@ -1,9 +1,11 @@
 import { ScrapedChapter, SearchResult, SourceType } from "@/types";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let browserInstance: any = null;
 
 async function getBrowser() {
   if (!browserInstance || !browserInstance.isConnected()) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const puppeteer = require("puppeteer-core");
     browserInstance = await puppeteer.launch({
       headless: true,
