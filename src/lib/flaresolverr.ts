@@ -3,6 +3,7 @@
 const FLARESOLVERR_URL =
   process.env.FLARESOLVERR_URL || "http://localhost:8191/v1";
 const MAX_TIMEOUT = 60000;
+const SESSION_NAME = "comix";
 
 interface FlareSolverrResponse {
   status: string;
@@ -24,16 +25,37 @@ interface FlareSolverrResponse {
   };
 }
 
-// Cache for session cookies and user agent
-let cachedCookies: string = "";
-let cachedUserAgent: string = "";
-let cookieExpiry: number = 0;
+let sessionReady = false;
+let sessionInitPromise: Promise<void> | null = null;
+
+/** Create or reuse a FlareSolverr session (keeps browser open for fast reuse) */
+async function ensureSession(): Promise<void> {
+  if (sessionReady) return;
+  if (sessionInitPromise) return sessionInitPromise;
+
+  sessionInitPromise = (async () => {
+    try {
+      // Try to create session (will fail if already exists, that's OK)
+      await fetch(FLARESOLVERR_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cmd: "sessions.create", session: SESSION_NAME }),
+      });
+    } catch {
+      // FlareSolverr might not be running yet
+    }
+    sessionReady = true;
+  })();
+
+  return sessionInitPromise;
+}
 
 /**
- * Fetch a URL through FlareSolverr (bypasses Cloudflare)
- * Returns the response body as a string
+ * Fetch a URL through FlareSolverr with session reuse.
+ * First request ~20s (solves challenge), subsequent requests ~0.3s.
  */
-export async function fetchViaFlareSolverr(url: string): Promise<string> {
+async function fetchViaFlareSolverr(url: string): Promise<string> {
+  await ensureSession();
   console.log("[FlareSolverr] Fetching " + url);
 
   const response = await fetch(FLARESOLVERR_URL, {
@@ -42,6 +64,7 @@ export async function fetchViaFlareSolverr(url: string): Promise<string> {
     body: JSON.stringify({
       cmd: "request.get",
       url,
+      session: SESSION_NAME,
       maxTimeout: MAX_TIMEOUT,
     }),
   });
@@ -53,17 +76,15 @@ export async function fetchViaFlareSolverr(url: string): Promise<string> {
   const data: FlareSolverrResponse = await response.json();
 
   if (data.status !== "ok") {
+    // Session might have expired, recreate it
+    if (data.message && data.message.includes("not found")) {
+      sessionReady = false;
+      sessionInitPromise = null;
+      await ensureSession();
+      // Retry once
+      return fetchViaFlareSolverr(url);
+    }
     throw new Error("FlareSolverr failed: " + data.message);
-  }
-
-  // Update cached cookies for direct fetch attempts
-  if (data.solution.cookies && data.solution.cookies.length > 0) {
-    cachedCookies = data.solution.cookies
-      .map((c) => c.name + "=" + c.value)
-      .join("; ");
-    cachedUserAgent = data.solution.userAgent;
-    // Cache for 10 minutes (cf_clearance typically lasts longer)
-    cookieExpiry = Date.now() + 10 * 60 * 1000;
   }
 
   // FlareSolverr wraps JSON in HTML <pre> tags, extract JSON
@@ -77,29 +98,11 @@ export async function fetchViaFlareSolverr(url: string): Promise<string> {
 }
 
 /**
- * Fetch JSON from a URL, with FlareSolverr fallback on 403
- * First tries direct fetch (fast), falls back to FlareSolverr on Cloudflare block
+ * Fetch JSON from a URL, with FlareSolverr fallback on 403.
+ * Uses persistent session for speed (~0.3s after first solve).
  */
 export async function fetchJsonWithBypass(url: string): Promise<any> {
-  // Try with cached cookies first (if we have them and they haven't expired)
-  if (cachedCookies && Date.now() < cookieExpiry) {
-    try {
-      const response = await fetch(url, {
-        headers: {
-          "User-Agent": cachedUserAgent,
-          Cookie: cachedCookies,
-          Accept: "application/json, text/plain, */*",
-        },
-      });
-      if (response.ok) {
-        return await response.json();
-      }
-    } catch {
-      // Fall through to FlareSolverr
-    }
-  }
-
-  // Try direct fetch (no cookies)
+  // Try direct fetch first (fast path, works if Cloudflare isn't blocking)
   try {
     const response = await fetch(url, {
       headers: {
@@ -114,18 +117,16 @@ export async function fetchJsonWithBypass(url: string): Promise<any> {
     if (response.status !== 403) {
       throw new Error("HTTP " + response.status + ": " + response.statusText);
     }
-    console.log("[FlareSolverr] Got 403 on " + url + ", using FlareSolverr...");
   } catch (error: any) {
     if (error?.message && !error.message.includes("403")) {
-      console.log(
-        "[FlareSolverr] Direct fetch failed: " +
-          error.message +
-          ", trying FlareSolverr...",
-      );
+      // Non-403 error, still try FlareSolverr
     }
   }
 
-  // Use FlareSolverr
+  // Use FlareSolverr with session
   const body = await fetchViaFlareSolverr(url);
   return JSON.parse(body);
 }
+
+// Pre-warm the session on module load
+ensureSession().catch(() => {});
